@@ -1,0 +1,220 @@
+report 50100 "ICR Trial Balance"
+{
+    DefaultLayout = RDLC;
+    RDLCLayout = './ICR Test Report/TrialBalance1.rdl';
+    AdditionalSearchTerms = 'year closing,close accounting period,close fiscal year';
+    ApplicationArea = All;
+    Caption = 'ICR Trial Balance';
+    PreviewMode = PrintLayout;
+    UsageCategory = ReportsAndAnalysis;
+    dataset
+    {
+        dataitem("G/L Account"; "G/L Account")
+        {
+            DataItemTableView = SORTING("No.");
+            RequestFilterFields = "No.", "Account Type", "Global Dimension 1 Filter", "Global Dimension 2 Filter";
+
+            column(STRSUBSTNO_Text000_PeriodText_; StrSubstNo(Text000, PeriodText))
+            {
+            }
+            column(COMPANYNAME; COMPANYPROPERTY.DisplayName())
+            {
+            }
+            column(PeriodText; PeriodText)
+            {
+            }
+            column(G_L_Account__TABLECAPTION__________GLFilter; TableCaption + ': ' + GLFilter)
+            {
+            }
+            column(GLFilter; GLFilter)
+            {
+            }
+            column(G_L_Account_No_; "No.")
+            {
+            }
+            column(Trial_BalanceCaption; Trial_BalanceCaptionLbl)
+            {
+            }
+            column(CurrReport_PAGENOCaption; CurrReport_PAGENOCaptionLbl)
+            {
+            }
+            column(Open_Balance_Caption; OpenBalanceCaptionLbl)
+            {
+            }
+            column(Net_Caption; NetCaptionLbl)
+            {
+            }
+            column(Net_ChangeCaption; Net_ChangeCaptionLbl)
+            {
+            }
+            column(BalanceCaption; BalanceCaptionLbl)
+            {
+            }
+            column(G_L_Account___No__Caption; FieldCaption("No."))
+            {
+            }
+            column(PADSTR_____G_L_Account__Indentation___2___G_L_Account__NameCaption; PADSTR_____G_L_Account__Indentation___2___G_L_Account__NameCaptionLbl)
+            {
+            }
+            column(G_L_Account___Net_Change_Caption; G_L_Account___Net_Change_CaptionLbl)
+            {
+            }
+            column(G_L_Account___Net_Change__Control22Caption; G_L_Account___Net_Change__Control22CaptionLbl)
+            {
+            }
+            column(G_L_Account___Balance_at_Date_Caption; G_L_Account___Balance_at_Date_CaptionLbl)
+            {
+            }
+            column(G_L_Account___Balance_at_Date__Control24Caption; G_L_Account___Balance_at_Date__Control24CaptionLbl)
+            {
+            }
+            column(PageGroupNo; PageGroupNo)
+            {
+            }
+            dataitem("Integer"; "Integer")
+            {
+                DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+
+                column(G_L_Account___No__; "G/L Account"."No.")
+                {
+                }
+                column(PADSTR_____G_L_Account__Indentation___2___G_L_Account__Name; PadStr('', "G/L Account".Indentation * 2) + "G/L Account".Name)
+                {
+                }
+
+                column(G_L_Account___Net_Change_; "G/L Account"."Net Change")
+                {
+                }
+
+                column(G_L_Account___Net_Change__Control22; -"G/L Account"."Net Change")
+                {
+                    AutoFormatType = 1;
+                }
+                column(G_L_Account___Balance_at_Date_; "G/L Account"."Balance at Date")
+                {
+                }
+                column(G_L_Account___Balance_at_Date__Control24; -"G/L Account"."Balance at Date")
+                {
+                    AutoFormatType = 1;
+                }
+                column(G_L_Account___Account_Type_; Format("G/L Account"."Account Type", 0, 2))
+                {
+                }
+                column(No__of_Blank_Lines; "G/L Account"."No. of Blank Lines")
+                {
+                }
+                column(ShowNetValue; "Show Net Value")
+                {
+                }
+                dataitem(BlankLineRepeater; "Integer")
+                {
+                    DataItemTableView = SORTING(Number);
+
+                    column(BlankLineNo; BlankLineNo)
+                    {
+                    }
+                    trigger OnAfterGetRecord()
+                    begin
+                        if BlankLineNo = 0 then CurrReport.Break();
+                        BlankLineNo -= 1;
+                    end;
+                }
+                trigger OnAfterGetRecord()
+                begin
+                    BlankLineNo := "G/L Account"."No. of Blank Lines" + 1;
+                end;
+            }
+            trigger OnAfterGetRecord()
+            begin
+                CalcFields("Net Change", "Balance at Date");
+                if ChangeGroupNo then begin
+                    PageGroupNo += 1;
+                    ChangeGroupNo := false;
+                end;
+                ChangeGroupNo := "New Page";
+            end;
+
+            trigger OnPreDataItem()
+            begin
+                PageGroupNo := 0;
+                ChangeGroupNo := false;
+            end;
+        }
+    }
+    requestpage
+    {
+        SaveValues = true;
+        layout
+        {
+            area(Content)
+            {
+                group(Show)
+                {
+                    field("Show Net Value"; "Show Net Value")
+                    {
+                        ApplicationArea = all;
+                    }
+                    field(StartDate; StartDate)
+                    {
+                        ApplicationArea = all;
+                        Caption = ' Start Date';
+                        trigger OnValidate()
+                        begin
+                            if ("G/L Account"."Date Filter" < 20221231D) and ("G/L Account"."Date Filter" > 20221201D) then
+                                Message('Please Enter Start Date');
+                        end;
+                    }
+                    field(DateFilter; DateFilter)
+                    {
+                        ApplicationArea = All;
+                    }
+                }
+            }
+        }
+        actions
+        {
+        }
+        trigger OnAfterGetRecord()
+        begin
+        end;
+    }
+    trigger OnPreReport()
+    begin
+        "G/L Account".SecurityFiltering(SecurityFilter::Filtered);
+        GLFilter := "G/L Account".GetFilters();
+        PeriodText := "G/L Account".GetFilter("Date Filter");
+    end;
+
+    trigger OnInitReport()
+
+    begin
+    end;
+
+    var
+        Text000: Label 'Period: %1';
+        PeriodText1: text;
+        PeriodText: Text[30];
+        Trial_BalanceCaptionLbl: Label 'Trial Balance';
+        CurrReport_PAGENOCaptionLbl: Label 'Page';
+        Net_ChangeCaptionLbl: Label 'Net Change';
+        BalanceCaptionLbl: Label 'Balance';
+        PADSTR_____G_L_Account__Indentation___2___G_L_Account__NameCaptionLbl: Label 'Name';
+        G_L_Account___Net_Change_CaptionLbl: Label 'Debit';
+        G_L_Account___Net_Change__Control22CaptionLbl: Label 'Credit';
+        G_L_Account___Balance_at_Date_CaptionLbl: Label 'Debit';
+        G_L_Account___Balance_at_Date__Control24CaptionLbl: Label 'Credit';
+        PageGroupNo: Integer;
+        ChangeGroupNo: Boolean;
+        BlankLineNo: Integer;
+        NetCaptionLbl: Label 'Net';
+        OpenBalanceCaptionLbl: Label 'Open Balance';
+        GLAccount: Record "G/L Account";
+        "Show Net Value": Boolean;
+        StartDate: Date;
+        EndDate: Date;
+        DateFilter: Date;
+        G_L_Account___Open_Balance_: Decimal;
+
+    protected var
+        GLFilter: Text;
+}
