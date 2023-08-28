@@ -146,6 +146,16 @@ report 50004 "Indent Report"
                     {
                         ApplicationArea = All;
                     }
+                    field(B1; B1)
+                    {
+                        ApplicationArea = All;
+                        Editable = not b2;
+                    }
+                    field(B2; B2)
+                    {
+                        ApplicationArea = All;
+                        Editable = not b1;
+                    }
                 }
             }
         }
@@ -164,6 +174,7 @@ report 50004 "Indent Report"
     trigger OnPreReport()
     begin
         glsetup.Get();
+        B2 := true;
     end;
 
     trigger OnPostReport()
@@ -177,6 +188,7 @@ report 50004 "Indent Report"
         glsetup: Record "General Ledger Setup";
         AmountInWords: Text;
         ReqNo: Code[20];
+        b3: Boolean;
         RepCheck: Report "Check Report";
         NoText: array[2] of Text;
         vendorName: Text;
@@ -186,6 +198,8 @@ report 50004 "Indent Report"
         TotalAmount: Decimal;
         Check: Decimal;
         StudNo: Code[20];
+        B1: Boolean;
+        B2: Boolean;
         PostedIndentReport: Label 'Posted Indent Report';
         IndentReport: Label 'Indent Report';
 
