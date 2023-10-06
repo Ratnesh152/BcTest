@@ -278,9 +278,8 @@ report 50015 "Customer Ledger"
                 end;
 
                 trigger OnPreDataItem()
-                begin 
-                    "Cust. Ledger Entry".SETFILTER("Cust. Ledger Entry"."Posting Date", '%1..%2', StartDate, EndDate
-                   );
+                begin
+                    "Cust. Ledger Entry".SETFILTER("Cust. Ledger Entry"."Posting Date", '%1..%2', StartDate, EndDate);
                     IF CurrencyCode = 'USD' THEN
                         "Cust. Ledger Entry".SETRANGE("Currency Code", 'USD')
                     ELSE
@@ -324,6 +323,8 @@ report 50015 "Customer Ledger"
             trigger OnPreDataItem()
             begin
                 CompInfo.Get();
+                FiscalYear := Date2DMY(EndDate,3)
+                
             end;
         }
     }
@@ -378,6 +379,7 @@ report 50015 "Customer Ledger"
         StartDate: Date;
         ChequeNo: Code[20];
         ChequeDate: Date;
+        FiscalYear: Integer;
         EndDate: Date;
         RemainingAmt: Decimal;
         RemainingAmt1: Decimal;

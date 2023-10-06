@@ -18,6 +18,7 @@ page 50104 "Indent Subform Ratnesh"
                 }
                 field(Description; Rec.Description)
                 {
+                    MultiLine = true;
                     ApplicationArea = All;
                 }
                 field(Quantity; Rec.Quantity)

@@ -2,7 +2,7 @@
   "id": "fc334e86-c708-44b5-b82f-14f3fb327c9a",
   "name": "Green Humanity Project",
   "publisher": "Ratnesh Chaudhary",
-  "version": "1.0.0.4",
+  "version": "1.0.0.6",
   "brief": "",
   "description": "",
   "privacyStatement": "",
@@ -78,4 +78,5 @@
   "features": [
     "NoImplicitWith"
   ]
+  
 }

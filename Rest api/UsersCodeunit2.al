@@ -1,4 +1,4 @@
-codeunit 50500 API_RequestHandlerCodeunit
+codeunit 50000 API_RequestHandlerCodeunit
 {
     trigger OnRun()
     begin

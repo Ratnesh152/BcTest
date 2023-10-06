@@ -1,4 +1,4 @@
-report 50023 "Sales-Invoice IN GST"
+report 50023 "Rat Sales-Invoice IN GST"
 {
     DefaultLayout = RDLC;
     RDLCLayout = './Sk Sir/SalesInvoice.rdl';

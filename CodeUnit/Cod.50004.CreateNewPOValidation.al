@@ -1,13 +1,14 @@
-codeunit 50004 "Create New PO Validation"
-{
-    TableNo = "Indent Header Ratnesh";
+// codeunit 55004 "Create New PO Validation"
+// {
 
-    trigger OnRun()
-    begin
-    end;
 
-    [EventSubscriber(ObjectType::Page, Page::"Indent Card Ratnesh", 'OnNewRecordEvent', '', true, true)]
-    local procedure POUserValidation(var Rec: Record "Indent Header Ratnesh"; var xRec: Record "Indent Header Ratnesh"; BelowxRec: Boolean)
-    begin
-    end;
-}
+//     trigger OnRun()
+//     begin
+//     end;
+
+//     [EventSubscriber(ObjectType::Table, Database::"Sales Invoice Header", 'OnBeforeEmailRecords', '', false, false)]
+//     local procedure OnBeforeEmailRecords(DocTxt: Text; var IsHandled: Boolean; var ReportSelections: Report "Sale Invoice IN GST Test"; var SalesInvoiceHeader: Record "Sales Invoice Header"; var ShowDialog: Boolean)
+//     begin
+
+//     end;
+// }

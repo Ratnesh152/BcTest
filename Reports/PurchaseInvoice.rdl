@@ -208,7 +208,6 @@ Cstr(Fields!PayToVendNo_PurchInvHeaderCaption.Value)
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -1116,7 +1115,8 @@ Cstr(Fields!PayToVendNo_PurchInvHeaderCaption.Value)
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="textbox81">
+                                          <Textbox Name="Textbox13">
+                                            <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
@@ -1134,9 +1134,11 @@ Cstr(Fields!PayToVendNo_PurchInvHeaderCaption.Value)
                                                 <Style />
                                               </Paragraph>
                                             </Paragraphs>
-                                            <rd:DefaultName>textbox81</rd:DefaultName>
-                                            <ZIndex>22</ZIndex>
+                                            <rd:DefaultName>Textbox13</rd:DefaultName>
                                             <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
                                               <VerticalAlign>Top</VerticalAlign>
                                               <PaddingRight>5pt</PaddingRight>
                                             </Style>
@@ -5352,8 +5354,8 @@ Cstr(Fields!PayToVendNo_PurchInvHeaderCaption.Value)
                                 </Filter>
                               </Filters>
                               <Top>13.23214cm</Top>
-                              <Height>3.88059cm</Height>
-                              <Width>7cm</Width>
+                              <Height>3.88058cm</Height>
+                              <Width>6cm</Width>
                               <ZIndex>4</ZIndex>
                               <Visibility>
                                 <Hidden>=IIF(Fields!ShipToAddr1.Value="",TRUE,FALSE)</Hidden>
@@ -5786,9 +5788,9 @@ Cstr(Fields!PayToVendNo_PurchInvHeaderCaption.Value)
                               </Filters>
                               <Top>13.23214cm</Top>
                               <Left>7cm</Left>
-                              <Height>3.88059cm</Height>
-                              <Width>7cm</Width>
-                              <ZIndex>4</ZIndex>
+                              <Height>3.88058cm</Height>
+                              <Width>6cm</Width>
+                              <ZIndex>5</ZIndex>
                               <Visibility>
                                 <Hidden>=IIF(Fields!RemitToAddress_Name.Value="",TRUE,FALSE)</Hidden>
                               </Visibility>
@@ -5953,7 +5955,7 @@ Cstr(Fields!PayToVendNo_PurchInvHeaderCaption.Value)
                               <Top>17.17551cm</Top>
                               <Height>0.41667in</Height>
                               <Width>7.15857in</Width>
-                              <ZIndex>5</ZIndex>
+                              <ZIndex>6</ZIndex>
                               <Visibility>
                                 <Hidden>=IIF(Fields!ShowInternalInfo.Value=TRUE AND Fields!DimText_DimensionLoop1.Value&lt;&gt;"",FALSE,TRUE)</Hidden>
                               </Visibility>
@@ -5976,7 +5978,7 @@ Cstr(Fields!PayToVendNo_PurchInvHeaderCaption.Value)
                               <Left>0.24509in</Left>
                               <Height>0.03125in</Height>
                               <Width>0.10653in</Width>
-                              <ZIndex>6</ZIndex>
+                              <ZIndex>7</ZIndex>
                               <Visibility>
                                 <Hidden>true</Hidden>
                               </Visibility>
@@ -6168,7 +6170,7 @@ Cstr(Fields!PayToVendNo_PurchInvHeaderCaption.Value)
               <Top>8.86075cm</Top>
               <Left>3.36cm</Left>
               <Height>11pt</Height>
-              <Width>8.00705cm</Width>
+              <Width>7.28344cm</Width>
               <ZIndex>4</ZIndex>
               <Style>
                 <VerticalAlign>Top</VerticalAlign>
@@ -6279,7 +6281,7 @@ Cstr(Fields!PayToVendNo_PurchInvHeaderCaption.Value)
               <Top>7.6475cm</Top>
               <Left>3.36001cm</Left>
               <Height>11pt</Height>
-              <Width>8.00705cm</Width>
+              <Width>7.28343cm</Width>
               <ZIndex>8</ZIndex>
               <Style>
                 <VerticalAlign>Top</VerticalAlign>
@@ -7394,7 +7396,7 @@ Cstr(Fields!PayToVendNo_PurchInvHeaderCaption.Value)
               <Top>3.175in</Top>
               <Left>1.32284in</Left>
               <Height>11pt</Height>
-              <Width>8.00705cm</Width>
+              <Width>7.28343cm</Width>
               <ZIndex>48</ZIndex>
               <Style>
                 <VerticalAlign>Top</VerticalAlign>
@@ -7450,7 +7452,7 @@ Cstr(Fields!PayToVendNo_PurchInvHeaderCaption.Value)
               <Top>3.335in</Top>
               <Left>1.32284in</Left>
               <Height>11pt</Height>
-              <Width>8.00705cm</Width>
+              <Width>7.28343cm</Width>
               <ZIndex>50</ZIndex>
               <Style>
                 <VerticalAlign>Top</VerticalAlign>

@@ -80,5 +80,5 @@ page 50002 "Enquiary Card"
         PurchaseHeader.Modify(true);
     end;
 
-   
+
 }

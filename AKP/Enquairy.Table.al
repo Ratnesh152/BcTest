@@ -1,4 +1,4 @@
-table 50000 "Enquairy Header"
+table 50012 "Enquairy Header"
 {
     fields
     {

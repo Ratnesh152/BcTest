@@ -166,19 +166,17 @@ table 50001 "Posted Indent Header Ratnesh"
         if IsHandled then
             exit;
 
-        with PostedIndentHeaderRatnesh2 do begin
-            Copy(Rec);
-            GetSalesSetup();
-            TestNoSeries();
-            if NoSeriesMgt.SelectSeries(GetNoSeriesCode(), PostedIndentHeader."No. Series", "No. Series") then begin
-                if ("Student No." = '') then begin
-                end;
-                NoSeriesMgt.SetSeries("No.");
-                if PostedIndentHeaderRatnesh2.Get("No.") then
-                    Error("No.");
-                Rec := PostedIndentHeader;
-                exit(true);
+        PostedIndentHeaderRatnesh2.Copy(Rec);
+        GetSalesSetup();
+        PostedIndentHeaderRatnesh2.TestNoSeries();
+        if NoSeriesMgt.SelectSeries(PostedIndentHeaderRatnesh2.GetNoSeriesCode(), PostedIndentHeader."No. Series", PostedIndentHeaderRatnesh2."No. Series") then begin
+            if (PostedIndentHeaderRatnesh2."Student No." = '') then begin
             end;
+            NoSeriesMgt.SetSeries(PostedIndentHeaderRatnesh2."No.");
+            if PostedIndentHeaderRatnesh2.Get(PostedIndentHeaderRatnesh2."No.") then
+                Error(PostedIndentHeaderRatnesh2."No.");
+            Rec := PostedIndentHeader;
+            exit(true);
         end;
     end;
 

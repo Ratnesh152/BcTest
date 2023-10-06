@@ -1167,14 +1167,13 @@ report 51015 "Vendor Ledger New(Test)"
         MinDate := Vendor.GETRANGEMIN("Date Filter");
         MaxDate := Vendor.GETRANGEMAX("Date Filter");
 
-        WITH "Vendor Ledger Entry" DO
-            IF PrintAmountsInLCY THEN BEGIN
-                AmountCaption := FIELDCAPTION("Amount (LCY)");
-                RemainingAmtCaption := FIELDCAPTION("Remaining Amt. (LCY)");
-            END ELSE BEGIN
-                AmountCaption := FIELDCAPTION(Amount);
-                RemainingAmtCaption := FIELDCAPTION("Remaining Amount");
-            END;
+        IF PrintAmountsInLCY THEN BEGIN
+            AmountCaption := "Vendor Ledger Entry".FIELDCAPTION("Amount (LCY)");
+            RemainingAmtCaption := "Vendor Ledger Entry".FIELDCAPTION("Remaining Amt. (LCY)");
+        END ELSE BEGIN
+            AmountCaption := "Vendor Ledger Entry".FIELDCAPTION(Amount);
+            RemainingAmtCaption := "Vendor Ledger Entry".FIELDCAPTION("Remaining Amount");
+        END;
     end;
 
     var

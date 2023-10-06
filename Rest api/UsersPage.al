@@ -65,7 +65,7 @@ page 50500 JP_Users
                 {
                     ApplicationArea = All;
                 }
-                field(companyName; companyName)
+                field(companyName; Rec.companyName)
                 {
                     ApplicationArea = All;
                 }

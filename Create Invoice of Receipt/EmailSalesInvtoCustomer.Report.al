@@ -38,12 +38,12 @@
 //                     field(Name; SourceExpression)
 //                     {
 //                         ApplicationArea = All;
-                        
+
 //                     }
 //                 }
 //             }
 //         }
-    
+
 //         actions
 //         {
 //             area(processing)
@@ -51,12 +51,12 @@
 //                 action(ActionName)
 //                 {
 //                     ApplicationArea = All;
-                    
+
 //                 }
 //             }
 //         }
 //     }
-    
+
 //     rendering
 //     {
 //         layout(LayoutName)

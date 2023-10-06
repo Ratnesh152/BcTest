@@ -135,15 +135,13 @@ table 50004 Student
     var
         Stud: Record Student;
     begin
-        with Stud do begin
-            Stud := Rec;
-            SalesSetup.Get();
-            SalesSetup.TestField("Student Nos.");
-            if NoSeriesMgt.SelectSeries(SalesSetup."Student Nos.", xRecStudent."No. Series", "No. Series") then begin
-                NoSeriesMgt.SetSeries("No.");
-                Rec := Stud;
-                exit(true);
-            end;
+        Stud := Rec;
+        SalesSetup.Get();
+        SalesSetup.TestField("Student Nos.");
+        if NoSeriesMgt.SelectSeries(SalesSetup."Student Nos.", xRecStudent."No. Series", Stud."No. Series") then begin
+            NoSeriesMgt.SetSeries(Stud."No.");
+            Rec := Stud;
+            exit(true);
         end;
     end;
 
