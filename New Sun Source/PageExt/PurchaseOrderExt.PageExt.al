@@ -8,7 +8,7 @@ pageextension 50051 "SSE Purchase Order Ext" extends "Purchase Order"
             {
                 Promoted = true;
                 PromotedCategory = Process;
-                ApplicationArea = Comments;
+                ApplicationArea = All;
                 Caption = 'Terms and Conditions';
                 Image = ViewComments;
                 RunObject = Page "SSE PO Term Details";
