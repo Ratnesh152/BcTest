@@ -5,6 +5,7 @@ tableextension 50102 RatneshCompanyExt extends "Company Information"
     {
         field(50100; "Company Registration No."; code[20])
         {
+            DataClassification = CustomerContent;
         }
     }
 }

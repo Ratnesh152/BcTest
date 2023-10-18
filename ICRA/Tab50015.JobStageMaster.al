@@ -1,7 +1,7 @@
 table 50015 "Job Stage Master"
 {
     Caption = 'Job Stage Master';
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
 
     fields
     {

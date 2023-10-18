@@ -47,9 +47,8 @@ report 50025 "Purchase Inv. Pending Approval"
             }
             dataitem("Purchase Line"; "Purchase Line")
             {
-                DataItemLink = "Document No." = FIELD("No.");
-                column(Type_PurchaseLine;
-                "Purchase Line".Type)
+                DataItemLink = "Document No." = field("No.");
+                column(Type_PurchaseLine; "Purchase Line".Type)
                 {
                 }
                 column(No_PurchaseLine; "Purchase Line"."No.")
@@ -96,7 +95,8 @@ report 50025 "Purchase Inv. Pending Approval"
                 }
                 trigger OnAfterGetRecord()
                 begin
-                    Today := DT2Date(System.CurrentDateTime)
+                    Today := DT2Date(System.CurrentDateTime);
+                    CustomerName := Customer.Name;
                 end;
 
             }
@@ -120,9 +120,8 @@ report 50025 "Purchase Inv. Pending Approval"
     }
 
     var
-        Dept_Code: Code[20];
-        Employee_Code: Code[20];
+        Customer: Record Customer;
         Today: Date;
-        AirLine_Booking_ID: Code[20];
+        CustomerName: text;
 }
 

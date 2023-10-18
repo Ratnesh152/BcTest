@@ -5,16 +5,19 @@ tableextension 50001 "User Task Extension" extends "User Task"
         field(50000; "ICRA Reviewer Id"; Code[50])
         {
             Caption = 'Reviewer Id';
+            DataClassification = CustomerContent;
         }
         field(50001; "ICRA Reviewed"; Boolean)
         {
             Editable = false;
             Caption = 'Reviewed';
+            DataClassification = CustomerContent;
         }
         field(50002; "ICRA Reviewed At"; DateTime)
         {
             Editable = false;
             Caption = 'Reviewed At';
+            DataClassification = CustomerContent;
         }
     }
 

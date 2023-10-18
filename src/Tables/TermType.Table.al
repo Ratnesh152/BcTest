@@ -2,6 +2,7 @@ table 50051 "SSE Term Type"
 {
     Caption = 'Term Type';
     LookupPageId = "SSE Term Types";
+    DataClassification = CustomerContent;
     fields
     {
         field(1; "Po Term Type Code"; Text[100])

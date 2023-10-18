@@ -1,7 +1,7 @@
 table 50014 "Stage Check List"
 {
     Caption = 'Stage Check List';
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
 
     fields
     {

@@ -4,6 +4,7 @@
 table 50100 Project
 {
     Caption = 'Project';
+    DataClassification = CustomerContent;
     fields
     {
         field(1; Code; Code[20])

@@ -3,6 +3,7 @@ table 50001 "Posted Indent Header Ratnesh"
     Caption = 'Posted Indent Header Ratnesh';
     DataCaptionFields = "No.", "Created By";
     LookupPageId = "Posted Indent Card Ratnesh";
+    DataClassification = CustomerContent;
     fields
     {
         field(1; "No."; Code[20])
@@ -112,11 +113,9 @@ table 50001 "Posted Indent Header Ratnesh"
         }
         field(19; "MSME Vendor"; Boolean)
         {
-            DataClassification = ToBeClassified;
         }
         field(20; "MSME Vendor Certifiate No."; Code[30])
         {
-            DataClassification = ToBeClassified;
         }
         field(21; "Due/Not Due"; Option)
         {
@@ -124,7 +123,6 @@ table 50001 "Posted Indent Header Ratnesh"
         }
         field(22; "Allow Indent Release"; Boolean)
         {
-            DataClassification = ToBeClassified;
         }
         field(24; "Post Code"; Code[20])
         {

@@ -1,6 +1,7 @@
 table 50301 "SMTPMailSetup"
 {
     Caption = 'SMTP Mail Setup';
+    DataClassification = CustomerContent;
 
     fields
     {

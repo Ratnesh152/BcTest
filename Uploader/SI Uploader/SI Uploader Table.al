@@ -1,28 +1,24 @@
 table 50021 "SI Uploader"
 {
+    DataClassification = CustomerContent;
     fields
     {
         field(1; "Entry Id"; Guid)
         {
-            DataClassification = ToBeClassified;
         }
         field(2; "Customer No."; Code[20])
         {
-            DataClassification = ToBeClassified;
             TableRelation = "Customer";
         }
         field(3; "Posting Date"; Date)
         {
-            DataClassification = ToBeClassified;
         }
         field(4; "External Doccument No."; code[35])
         {
             Editable = false;
-            DataClassification = ToBeClassified;
         }
         field(5; Location; Code[10])
         {
-            DataClassification = ToBeClassified;
             trigger OnValidate()
             var
                 Locations: Record 14;
@@ -35,12 +31,10 @@ table 50021 "SI Uploader"
         }
         field(6; Type; Option)
         {
-            DataClassification = ToBeClassified;
             OptionMembers = " ","G/L Account",Item,Resource,"Fixed Asset","Charge(Item)";
         }
         field(7; "No."; Code[20])
         {
-            DataClassification = ToBeClassified;
             TableRelation = IF (Type = CONST(" ")) "Standard Text"
             ELSE
             IF (Type = CONST("G/L Account")) "G/L Account" WHERE("Direct Posting" = CONST(true),
@@ -59,80 +53,63 @@ table 50021 "SI Uploader"
         }
         field(8; Description; Text[50])
         {
-            DataClassification = ToBeClassified;
         }
         field(9; "Unit Of Measure Code"; Code[10])
         {
-            DataClassification = ToBeClassified;
             TableRelation = IF (Type = CONST(Item),
                                 "No." = FILTER(<> '')) "Item Unit of Measure".Code WHERE("Item No." = FIELD("No."));
         }
         field(10; Quantity; Decimal)
         {
-            DataClassification = ToBeClassified;
         }
         field(11; "Unit Price"; Decimal)
         {
-            DataClassification = ToBeClassified;
         }
         field(12; "GST Group Code"; Code[20])
         {
-            DataClassification = ToBeClassified;
             TableRelation = "GST Group";
         }
         field(13; "HSN Code"; Code[8])
         {
-            DataClassification = ToBeClassified;
             TableRelation = "HSN/SAC".Code WHERE("GST Group Code" = FIELD("GST Group Code"));
         }
         field(14; "GST Group Type"; Option)
         {
-            DataClassification = ToBeClassified;
             OptionMembers = Goods,Service;
         }
         field(15; "Department Code"; Code[20])
         {
-            DataClassification = ToBeClassified;
             TableRelation = "Dimension Value".Code WHERE("Global Dimension No." = CONST(1),
                                                           Blocked = CONST(false));
         }
         field(16; Status; Option)
         {
-            DataClassification = ToBeClassified;
             OptionMembers = Pending,Created,Error;
         }
         field(17; "Document ID"; Integer)
         {
-            DataClassification = ToBeClassified;
         }
         field(18; "Error Text"; Text[250])
         {
-            DataClassification = ToBeClassified;
         }
         field(19; "Sales Invoice No."; Code[20])
         {
-            DataClassification = ToBeClassified;
         }
         field(20; "Cost Center"; code[20])
         {
-            DataClassification = ToBeClassified;
         }
         field(21; "Invoice Status"; Option)
         {
-            DataClassification = ToBeClassified;
             OptionMembers = " ",Pending,Error,Posted;
         }
         field(22; "Posted Invoice No."; Code[20])
         {
-            DataClassification = ToBeClassified;
         }
         field(23; "Error Text Posting"; Text[250])
         {
-            DataClassification = ToBeClassified;
         }
         field(24; "User ID"; Code[20])
         {
-            DataClassification = ToBeClassified;
         }
     }
 

@@ -1,7 +1,7 @@
 table 50007 "Enquairy Line"
 {
     Caption = 'Enquairy Line';
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
     DataPerCompany = false;
 
     fields
@@ -13,23 +13,19 @@ table 50007 "Enquairy Line"
         field(2; Type; Enum "Purchase Line Type")
         {
             Caption = 'Type';
-
-            trigger OnValidate()
-            begin
-            end;
         }
         field(3; "No."; Code[20])
         {
             Caption = 'No.';
             TableRelation = IF (Type = CONST(" ")) "Standard Text"
             ELSE
-            IF (Type = CONST("G/L Account")) "G/L Account"
+            IF (Type = const("G/L Account")) "G/L Account"
             ELSE
-            IF (Type = CONST("Fixed Asset")) "Fixed Asset"
+            IF (Type = const("Fixed Asset")) "Fixed Asset"
             ELSE
-            IF (Type = CONST("Charge (Item)")) "Item Charge"
+            IF (Type = const("Charge (Item)")) "Item Charge"
             ELSE
-            IF (Type = CONST(Item)) Item
+            IF (Type = const(Item)) Item
             else
             if (Type = const(Resource)) Resource;
             ValidateTableRelation = false;

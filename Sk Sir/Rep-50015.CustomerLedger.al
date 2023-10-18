@@ -323,8 +323,8 @@ report 50015 "Customer Ledger"
             trigger OnPreDataItem()
             begin
                 CompInfo.Get();
-                FiscalYear := Date2DMY(EndDate,3)
-                
+                FiscalYear := Date2DMY(EndDate, 3)
+
             end;
         }
     }

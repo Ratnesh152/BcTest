@@ -4,6 +4,7 @@ tableextension 50104 RatneshDetGstLedEntry extends "Detailed GST Ledger Entry"
     {
         field(50100; "Document Date"; Date)
         {
+            DataClassification = CustomerContent;
         }
     }
 }

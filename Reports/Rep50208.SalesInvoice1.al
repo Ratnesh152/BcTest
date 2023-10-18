@@ -446,7 +446,7 @@ report 50208 "Sales - Invoice1"
                         {
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineVATAmtText; VATAmountLine.VATAmountText)
+                        column(VATAmtLineVATAmtText; TempVATAmountLine.VATAmountText)
                         {
                         }
                         column(TotalExclVATText; TotalExclVATText)
@@ -478,7 +478,7 @@ report 50208 "Sales - Invoice1"
                         column(TotalInclVATText_SalesInvLine; TotalInclVATText)
                         {
                         }
-                        column(VATAmtText_SalesInvLine; VATAmountLine.VATAmountText)
+                        column(VATAmtText_SalesInvLine; TempVATAmountLine.VATAmountText)
                         {
                         }
                         column(DocNo_SalesInvLine; "Document No.")
@@ -691,21 +691,21 @@ report 50208 "Sales - Invoice1"
                                 if (Quantity = 0) then
                                     ShowRow := 1;
 
-                            VATAmountLine.INIT;
-                            VATAmountLine."VAT Identifier" := "VAT Identifier";
-                            VATAmountLine."VAT Calculation Type" := "VAT Calculation Type";
-                            VATAmountLine."Tax Group Code" := "Tax Group Code";
-                            VATAmountLine."VAT %" := "VAT %";
-                            VATAmountLine."VAT Base" := Amount;
-                            VATAmountLine."Amount Including VAT" := "Amount Including VAT";
-                            VATAmountLine."Line Amount" := "Line Amount";
+                            TempVATAmountLine.INIT;
+                            TempVATAmountLine."VAT Identifier" := "VAT Identifier";
+                            TempVATAmountLine."VAT Calculation Type" := "VAT Calculation Type";
+                            TempVATAmountLine."Tax Group Code" := "Tax Group Code";
+                            TempVATAmountLine."VAT %" := "VAT %";
+                            TempVATAmountLine."VAT Base" := Amount;
+                            TempVATAmountLine."Amount Including VAT" := "Amount Including VAT";
+                            TempVATAmountLine."Line Amount" := "Line Amount";
                             IF "Allow Invoice Disc." THEN
-                                VATAmountLine."Inv. Disc. Base Amount" := "Line Amount";
-                            VATAmountLine."Invoice Discount Amount" := "Inv. Discount Amount";
-                            VATAmountLine."VAT Clause Code" := "VAT Clause Code";
-                            VATAmountLine.InsertLine;
+                                TempVATAmountLine."Inv. Disc. Base Amount" := "Line Amount";
+                            TempVATAmountLine."Invoice Discount Amount" := "Inv. Discount Amount";
+                            TempVATAmountLine."VAT Clause Code" := "VAT Clause Code";
+                            TempVATAmountLine.InsertLine;
                             CalcVATAmountLineLCY(
-                              "Sales Invoice Header", VATAmountLine, TempVATAmountLineLCY,
+                              "Sales Invoice Header", TempVATAmountLine, TempVATAmountLineLCY,
                               VATBaseRemainderAfterRoundingLCY, AmtInclVATRemainderAfterRoundingLCY);
 
                             TotalSubTotal += "Line Amount";
@@ -741,7 +741,7 @@ report 50208 "Sales - Invoice1"
 
                         trigger OnPreDataItem()
                         begin
-                            VATAmountLine.DELETEALL;
+                            TempVATAmountLine.DELETEALL;
                             TempVATAmountLineLCY.DELETEALL;
                             VATBaseRemainderAfterRoundingLCY := 0;
                             AmtInclVATRemainderAfterRoundingLCY := 0;
@@ -761,36 +761,36 @@ report 50208 "Sales - Invoice1"
                     dataitem(VATCounter; Integer)
                     {
                         DataItemTableView = SORTING(Number);
-                        column(VATAmtLineVATBase; VATAmountLine."VAT Base")
+                        column(VATAmtLineVATBase; TempVATAmountLine."VAT Base")
                         {
 
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineVATAmt; VATAmountLine."VAT Amount")
+                        column(VATAmtLineVATAmt; TempVATAmountLine."VAT Amount")
                         {
 
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineLineAmt; VATAmountLine."Line Amount")
+                        column(VATAmtLineLineAmt; TempVATAmountLine."Line Amount")
                         {
 
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineInvDiscBaseAmt; VATAmountLine."Inv. Disc. Base Amount")
+                        column(VATAmtLineInvDiscBaseAmt; TempVATAmountLine."Inv. Disc. Base Amount")
                         {
 
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineInvDiscAmt; VATAmountLine."Invoice Discount Amount")
+                        column(VATAmtLineInvDiscAmt; TempVATAmountLine."Invoice Discount Amount")
                         {
 
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineVATPer; VATAmountLine."VAT %")
+                        column(VATAmtLineVATPer; TempVATAmountLine."VAT %")
                         {
 
                         }
-                        column(VATAmtLineVATIdentifier; VATAmountLine."VAT Identifier")
+                        column(VATAmtLineVATIdentifier; TempVATAmountLine."VAT Identifier")
                         {
                         }
                         column(VATAmtSpecificationCptn; VATAmtSpecificationCptnLbl)
@@ -805,24 +805,24 @@ report 50208 "Sales - Invoice1"
 
                         trigger OnAfterGetRecord()
                         begin
-                            VATAmountLine.GetLine(Number);
+                            TempVATAmountLine.GetLine(Number);
                         end;
 
                         trigger OnPreDataItem()
                         begin
-                            SETRANGE(Number, 1, VATAmountLine.COUNT);
+                            SETRANGE(Number, 1, TempVATAmountLine.COUNT);
                             CurrReport.CREATETOTALS(
-                              VATAmountLine."Line Amount", VATAmountLine."Inv. Disc. Base Amount",
-                              VATAmountLine."Invoice Discount Amount", VATAmountLine."VAT Base", VATAmountLine."VAT Amount");
+                              TempVATAmountLine."Line Amount", TempVATAmountLine."Inv. Disc. Base Amount",
+                              TempVATAmountLine."Invoice Discount Amount", TempVATAmountLine."VAT Base", TempVATAmountLine."VAT Amount");
                         end;
                     }
                     dataitem(VATClauseEntryCounter; Integer)
                     {
                         DataItemTableView = SORTING(Number);
-                        column(VATClauseVATIdentifier; VATAmountLine."VAT Identifier")
+                        column(VATClauseVATIdentifier; TempVATAmountLine."VAT Identifier")
                         {
                         }
-                        column(VATClauseCode; VATAmountLine."VAT Clause Code")
+                        column(VATClauseCode; TempVATAmountLine."VAT Clause Code")
                         {
                         }
                         column(VATClauseDescription; VATClause.Description)
@@ -831,7 +831,7 @@ report 50208 "Sales - Invoice1"
                         column(VATClauseDescription2; VATClause."Description 2")
                         {
                         }
-                        column(VATClauseAmount; VATAmountLine."VAT Amount")
+                        column(VATClauseAmount; TempVATAmountLine."VAT Amount")
                         {
 
                             AutoFormatType = 1;
@@ -848,8 +848,8 @@ report 50208 "Sales - Invoice1"
 
                         trigger OnAfterGetRecord()
                         begin
-                            VATAmountLine.GetLine(Number);
-                            IF NOT VATClause.GET(VATAmountLine."VAT Clause Code") THEN
+                            TempVATAmountLine.GetLine(Number);
+                            IF NOT VATClause.GET(TempVATAmountLine."VAT Clause Code") THEN
                                 CurrReport.SKIP;
                             VATClause.TranslateDescription("Sales Invoice Header"."Language Code");
                         end;
@@ -857,8 +857,8 @@ report 50208 "Sales - Invoice1"
                         trigger OnPreDataItem()
                         begin
                             CLEAR(VATClause);
-                            SETRANGE(Number, 1, VATAmountLine.COUNT);
-                            CurrReport.CREATETOTALS(VATAmountLine."VAT Amount");
+                            SETRANGE(Number, 1, TempVATAmountLine.COUNT);
+                            CurrReport.CREATETOTALS(TempVATAmountLine."VAT Amount");
                         end;
                     }
                     dataitem(VatCounterLCY; Integer)
@@ -900,7 +900,7 @@ report 50208 "Sales - Invoice1"
                             THEN
                                 CurrReport.BREAK;
 
-                            SETRANGE(Number, 1, VATAmountLine.COUNT);
+                            SETRANGE(Number, 1, TempVATAmountLine.COUNT);
                             CurrReport.CREATETOTALS(VALVATBaseLCY, VALVATAmountLCY);
 
                             IF GLSetup."LCY Code" = '' THEN
@@ -1040,6 +1040,7 @@ report 50208 "Sales - Invoice1"
             trigger OnAfterGetRecord()//main
             var
                 Handled: Boolean;
+                interactionManagement: Enum "Interaction Log Entry Document Type";
             begin
 
                 FormatAddressFields("Sales Invoice Header");
@@ -1053,22 +1054,17 @@ report 50208 "Sales - Invoice1"
                 GetLineFeeNoteOnReportHist("No.");
 
                 IF LogInteraction THEN
-                    IF NOT IsReportInPreviewMode THEN BEGIN
+                    IF NOT IsReportInPreviewMode() THEN
                         IF "Bill-to Contact No." <> '' THEN
-                            SegManagement.LogDocument(
-                              SegManagement.SalesInvoiceInterDocType, "No.", 0, 0, DATABASE::Contact, "Bill-to Contact No.", "Salesperson Code",
-                              "Campaign No.", "Posting Description", '')
-                        ELSE
-                            SegManagement.LogDocument(
-                              SegManagement.SalesInvoiceInterDocType, "No.", 0, 0, DATABASE::Customer, "Bill-to Customer No.", "Salesperson Code",
-                              "Campaign No.", "Posting Description", '');
-                    END;
+                            SegManagement.LogDocument(SegManagement.SalesInvoiceInterDocType(), "No.", 0, 0, DATABASE::Contact, "Bill-to Contact No.", "Salesperson Code", "Campaign No.", "Posting Description", '')
+                        else
+                            SegManagement.LogDocument(SegManagement.SalesInvoiceInterDocType(), "No.", 0, 0, DATABASE::Customer, "Bill-to Customer No.", "Salesperson Code", "Campaign No.", "Posting Description", '');
                 OnAfterGetRecordSalesInvoiceHeader("Sales Invoice Header");
                 OnGetReferenceText("Sales Invoice Header", ReferenceText, Handled);
                 //Alle-RN-Start
-                BankAccount.RESET;
+                BankAccount.RESET();
                 BankAccount.SETRANGE("Bank Account No.", CompanyInformation."Bank Account No.");
-                IF BankAccount.FINDFIRST THEN;
+                IF BankAccount.FINDFIRST() then;
                 IF CountryRegion.GET(BankAccount."Country/Region Code") THEN;
                 //Alle-RN-End
                 //Alle-SS
@@ -1216,9 +1212,9 @@ report 50208 "Sales - Invoice1"
     var
         Text004: Label 'Sales - Invoice %1', Comment = '%1 = Document No.';
         PageCaptionCap: Label 'Page %1 of %2';
-        SalespersonName: Text[30];
+        SalespersonName: Text[50];
         Salesperson: Record "Salesperson/Purchaser";
-        Tel: Text[20];
+        Tel: Text[30];
         ContactLbl: Label 'Contact';
         Discount: Boolean;
         ItemNumber: Boolean;
@@ -1241,7 +1237,7 @@ report 50208 "Sales - Invoice1"
         SalesSetup: Record "Sales & Receivables Setup";
         SalesShipmentBuffer: Record "Sales Shipment Buffer" temporary;
         Cust: Record Customer;
-        VATAmountLine: Record "VAT Amount Line" temporary;
+        TempVATAmountLine: Record "VAT Amount Line" temporary;
         TempVATAmountLineLCY: Record "VAT Amount Line" temporary;
         DimSetEntry1: Record "Dimension Set Entry";
         DimSetEntry2: Record "Dimension Set Entry";
@@ -1641,13 +1637,13 @@ report 50208 "Sales - Invoice1"
 
         LineFeeNoteOnReportHist.SETRANGE("Cust. Ledger Entry No", CustLedgerEntry."Entry No.");
         LineFeeNoteOnReportHist.SETRANGE("Language Code", Customer."Language Code");
-        IF LineFeeNoteOnReportHist.FINDSET THEN BEGIN
+        IF LineFeeNoteOnReportHist.FINDSET THEN
             REPEAT
                 TempLineFeeNoteOnReportHist.INIT;
                 TempLineFeeNoteOnReportHist.COPY(LineFeeNoteOnReportHist);
                 TempLineFeeNoteOnReportHist.INSERT;
-            UNTIL LineFeeNoteOnReportHist.NEXT = 0;
-        END ELSE BEGIN
+            UNTIL LineFeeNoteOnReportHist.NEXT = 0
+        ELSE BEGIN
             LineFeeNoteOnReportHist.SETRANGE("Language Code", Language.Code);
             IF LineFeeNoteOnReportHist.FINDSET THEN
                 REPEAT
@@ -1655,7 +1651,7 @@ report 50208 "Sales - Invoice1"
                     TempLineFeeNoteOnReportHist.COPY(LineFeeNoteOnReportHist);
                     TempLineFeeNoteOnReportHist.INSERT;
                 UNTIL LineFeeNoteOnReportHist.NEXT = 0;
-        END;
+        end;
     end;
 
     local procedure CalcVATAmountLineLCY(SalesInvoiceHeader: Record "Sales Invoice Header"; TempVATAmountLine2: Record "VAT Amount Line" temporary; var TempVATAmountLineLCY2: Record "VAT Amount Line" temporary; var VATBaseRemainderAfterRoundingLCY2: Decimal; var AmtInclVATRemainderAfterRoundingLCY2: Decimal)

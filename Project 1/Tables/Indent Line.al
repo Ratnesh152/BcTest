@@ -1,6 +1,7 @@
 table 50107 "Indent Line Ratnesh"
 {
     Caption = 'Indent Line Ratnesh';
+    DataClassification = CustomerContent;
 
     fields
     {

@@ -1,5 +1,6 @@
 table 50012 "Enquairy Header"
 {
+    DataClassification = CustomerContent;
     fields
     {
         field(1; "No."; Code[20])

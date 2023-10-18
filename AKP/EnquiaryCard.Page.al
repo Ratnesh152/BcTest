@@ -50,7 +50,6 @@ page 50002 "Enquiary Card"
                 SubPageLink = "Document No." = field("No.");
             }
         }
-
     }
     actions
     {

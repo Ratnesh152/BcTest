@@ -2,6 +2,7 @@ table 50022 "AXT Purch. Doc. Staging Upload"
 {
 
     Caption = 'Purchase Document Staging Upload';
+    DataClassification = CustomerContent;
 
     fields
     {

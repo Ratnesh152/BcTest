@@ -1,7 +1,7 @@
 table 50002 "Posted Indent Line Ratnesh"
 {
     Caption = 'Posted Indent Line Ratnesh';
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
 
     fields
     {

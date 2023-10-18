@@ -5,7 +5,7 @@ page 50014 "Job Stage Master"
     PageType = List;
     SourceTable = "Job Stage Master";
     UsageCategory = Lists;
-    
+
     layout
     {
         area(content)

@@ -280,7 +280,6 @@ report 50120 "Purchase - Invoice Ratnesh"
                         column(HeaderDimensionsCaption; HeaderDimensionsCaptionLbl)
                         {
                         }
-
                         trigger OnAfterGetRecord()
                         begin
                             if Number = 1 then begin
@@ -297,10 +296,7 @@ report 50120 "Purchase - Invoice Ratnesh"
                                 if DimText = '' then
                                     DimText := StrSubstNo('%1 %2', DimSetEntry1."Dimension Code", DimSetEntry1."Dimension Value Code")
                                 else
-                                    DimText :=
-                                      StrSubstNo(
-                                        '%1, %2 %3', DimText,
-                                        DimSetEntry1."Dimension Code", DimSetEntry1."Dimension Value Code");
+                                    DimText := StrSubstNo('%1, %2, %3', DimText, DimSetEntry1."Dimension Code", DimSetEntry1."Dimension Value Code");
                                 if StrLen(DimText) > MaxStrLen(OldDimText) then begin
                                     DimText := OldDimText;
                                     Continue := true;
@@ -659,9 +655,9 @@ report 50120 "Purchase - Invoice Ratnesh"
                             Clear(VALVATAmountLCY);
 
                             if GLSetup."LCY Code" = '' then
-                                VALSpecLCYHeader := Text007 + Text008
+                                VALSpecLCYHeader := Text007Lbl + Text008
                             else
-                                VALSpecLCYHeader := Text007 + Format(GLSetup."LCY Code");
+                                VALSpecLCYHeader := Text007Lbl + Format(GLSetup."LCY Code");
 
                             CurrExchRate.FindCurrency("Purch. Inv. Header"."Posting Date", "Purch. Inv. Header"."Currency Code", 1);
                             CalculatedExchRate := Round(1 / "Purch. Inv. Header"."Currency Factor" * CurrExchRate."Exchange Rate Amount", 0.000001);
@@ -776,7 +772,7 @@ report 50120 "Purchase - Invoice Ratnesh"
                 trigger OnPreDataItem()
                 begin
                     OutputNo := 1;
-                    NoOfLoops := Abs(NoOfCopies) + 1;
+                    NoOfLoops := Abs(NoOfCopie) + 1;
                     CopyText := '';
                     SetRange(Number, 1, NoOfLoops);
                 end;
@@ -784,8 +780,8 @@ report 50120 "Purchase - Invoice Ratnesh"
 
             trigger OnAfterGetRecord()
             begin
-                CurrReport.Language := Language.GetLanguageIdOrDefault("Language Code");
-                FormatAddr.SetLanguageCode("Language Code");
+                CurrReport.Language := Languages.GetLanguageIdOrDefault("Language Code");
+                FormatAddress.SetLanguageCode("Language Code");
 
                 FormatAddressFields("Purch. Inv. Header");
                 FormatDocumentFields("Purch. Inv. Header");
@@ -814,7 +810,7 @@ report 50120 "Purchase - Invoice Ratnesh"
                 group(Options)
                 {
                     Caption = 'Options';
-                    field(NoOfCopies; NoOfCopies)
+                    field(NoOfCopies; NoOfCopie)
                     {
                         ApplicationArea = Basic, Suite;
                         Caption = 'No. of Copies';
@@ -894,8 +890,8 @@ report 50120 "Purchase - Invoice Ratnesh"
         BuyFromContact: Record Contact;
         PayToContact: Record Contact;
         RemitAddressBuffer: Record "Remit Address Buffer";
-        Language: Codeunit Language;
-        FormatAddr: Codeunit "Format Address";
+        Languages: Codeunit Language;
+        FormatAddress: Codeunit "Format Address";
         FormatDocument: Codeunit "Format Document";
         SegManagement: Codeunit SegManagement;
         VendAddr: array[8] of Text[100];
@@ -909,10 +905,10 @@ report 50120 "Purchase - Invoice Ratnesh"
         TotalInclVATText: Text[50];
         TotalExclVATText: Text[50];
         MoreLines: Boolean;
-        NoOfCopies: Integer;
+        NoOfCopie: Integer;
         NoOfLoops: Integer;
         CopyText: Text[30];
-        DimText: Text[120];
+        DimText: Text;
         OldDimText: Text[75];
         ShowInternalInfo: Boolean;
         Continue: Boolean;
@@ -935,9 +931,8 @@ report 50120 "Purchase - Invoice Ratnesh"
         TotalAmountVAT: Decimal;
         TotalInvoiceDiscountAmount: Decimal;
         TotalPaymentDiscountOnVAT: Decimal;
-
-        Text004: Label 'Purchase - Invoice %1', Comment = '%1 = Document No.';
-        Text007: Label 'VAT Amount Specification in ';
+        Text004Lbl: Label 'Purchase - Invoice %1', Comment = '%1 = Document No.';
+        Text007Lbl: Label 'VAT Amount Specification in ';
         Text008: Label 'Local Currency';
         Text009: Label 'Exchange rate: %1/%2';
         Text010: Label 'Purchase - Prepayment Invoice %1', Comment = '%1 = Document No.';
@@ -990,7 +985,7 @@ report 50120 "Purchase - Invoice Ratnesh"
     begin
         if "Purch. Inv. Header"."Prepayment Invoice" then
             exit(Text010);
-        exit(Text004);
+        exit(Text004Lbl);
     end;
 
     local procedure InitLogInteraction()
@@ -1000,7 +995,7 @@ report 50120 "Purchase - Invoice Ratnesh"
 
     procedure InitializeRequest(NewNoOfCopies: Integer; NewShowInternalInfo: Boolean; NewLogInteraction: Boolean)
     begin
-        NoOfCopies := NewNoOfCopies;
+        NoOfCopie := NewNoOfCopies;
         ShowInternalInfo := NewShowInternalInfo;
         LogInteraction := NewLogInteraction;
     end;
@@ -1014,10 +1009,10 @@ report 50120 "Purchase - Invoice Ratnesh"
 
     local procedure FormatAddressFields(var PurchInvHeader: Record "Purch. Inv. Header")
     begin
-        FormatAddr.GetCompanyAddr(PurchInvHeader."Responsibility Center", RespCenter, CompanyInfo, CompanyAddr);
-        FormatAddr.PurchInvPayTo(VendAddr, PurchInvHeader);
-        FormatAddr.PurchInvShipTo(ShipToAddr, PurchInvHeader);
-        FormatAddr.PurchInvRemitTo(RemitAddressBuffer, PurchInvHeader);
+        FormatAddress.GetCompanyAddr(PurchInvHeader."Responsibility Center", RespCenter, CompanyInfo, CompanyAddr);
+        FormatAddress.PurchInvPayTo(VendAddr, PurchInvHeader);
+        FormatAddress.PurchInvShipTo(ShipToAddr, PurchInvHeader);
+        FormatAddress.PurchInvRemitTo(RemitAddressBuffer, PurchInvHeader);
     end;
 
     local procedure FormatDocumentFields(PurchInvHeader: Record "Purch. Inv. Header")

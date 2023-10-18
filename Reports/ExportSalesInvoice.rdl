@@ -5250,6 +5250,9 @@ Jf6nNehfqqJFn8x9a8K+KX/BaD9oX4qs1tH4wt/DUNz8gt9A06O3ZiePlkbzJvph/wDCvrb4Qf8ABuLo
         <Field Name="CurrencyCode">
           <DataField>CurrencyCode</DataField>
         </Field>
+        <Field Name="Customer_PO_No_">
+          <DataField>Customer_PO_No_</DataField>
+        </Field>
         <Field Name="Document_Date">
           <DataField>Document_Date</DataField>
         </Field>
@@ -5261,6 +5264,9 @@ Jf6nNehfqqJFn8x9a8K+KX/BaD9oX4qs1tH4wt/DUNz8gt9A06O3ZiePlkbzJvph/wDCvrb4Qf8ABuLo
         </Field>
         <Field Name="VATLbl">
           <DataField>VATLbl</DataField>
+        </Field>
+        <Field Name="eCommerceSetup">
+          <DataField>eCommerceSetup</DataField>
         </Field>
         <Field Name="Currency_Factor">
           <DataField>Currency_Factor</DataField>

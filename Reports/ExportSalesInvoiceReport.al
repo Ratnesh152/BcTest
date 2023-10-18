@@ -213,9 +213,9 @@ report 50127 "Emudhra Sales Invoice Test"
             column(CurrencyCode; "Currency Code")
             {
             }
-            // column(Customer_PO_No_; "Customer PO No.")
-            // {
-            // }
+            column(Customer_PO_No_; '')
+            {
+            }
             column(Document_Date; "Document Date")
             {
             }
@@ -231,6 +231,9 @@ report 50127 "Emudhra Sales Invoice Test"
             // column(eCommerceSetup; eCommerceSetup."Foreign Company")
             // {
             // }
+            column(eCommerceSetup; '')
+            {
+            }
             column(Currency_Factor; "Currency Factor")
             {
             }
@@ -384,14 +387,14 @@ report 50127 "Emudhra Sales Invoice Test"
                             until TCSEntry.Next() = 0;
 
                         OrderComment := '';
-                        SalesOrderComment.Reset();
-                        SalesOrderComment.SetRange("Document Type", SalesOrderComment."Document Type"::"Posted Invoice");
-                        SalesOrderComment.SetRange("No.", "Sales Invoice Line"."Document No.");
-                        SalesOrderComment.SetRange("Document Line No.", "Sales Invoice Line"."Line No.");
-                        if SalesOrderComment.FindSet() then
+                        SalesCommentLine.Reset();
+                        SalesCommentLine.SetRange("Document Type", SalesCommentLine."Document Type"::"Posted Invoice");
+                        SalesCommentLine.SetRange("No.", "Sales Invoice Line"."Document No.");
+                        SalesCommentLine.SetRange("Document Line No.", "Sales Invoice Line"."Line No.");
+                        if SalesCommentLine.FindSet() then
                             repeat
-                                orderComment += SalesOrderComment.Comment + ' ';
-                            until SalesOrderComment.Next() = 0;
+                                orderComment += SalesCommentLine.Comment + ' ';
+                            until SalesCommentLine.Next() = 0;
                         //
                         if "Sales Invoice Line"."Line Amount" <> 0 then
                             TotalLineAmount += "Sales Invoice Line"."Line Amount";
@@ -409,10 +412,16 @@ report 50127 "Emudhra Sales Invoice Test"
                             CheckforOtherCurrencies.InitTextVariable;
                             CheckforOtherCurrencies.FormatNoText(NoText, AmountInCludingTax, "Sales Invoice Header"."Currency Code");
                             AmountInWords := NoText[1] + ' ' + NoText[2] + 'ONLY';
-                            newtext := UpperCase(AmountInWords);
-                            where := '=';
-                            which := '*';
-                            NewAmountInWords := DelChr(newtext, Where, which);
+                            // newtext := UpperCase(AmountInWords);
+                            // NewAmountInWords := DelChr(newtext, '=', '*');
+                            NewAmountInWords := AmountInWords;
+                            Clear(i);
+                            InputString := 'NEW YORK ABC CAD BDF RED BLUE';
+                            Message('InputString is %1.', InputString);
+                            StringList := InputString.Split(' ');
+                            for i := 1 to StringList.Count() do begin
+                                OutputString := OutputString + ' ' + UPPERCASE(COPYSTR(StringList.Get(i), 1, 1)) + LOWERCASE(COPYSTR(StringList.Get(i), 2));
+                            end;
                         end;
                     end;
                 }
@@ -577,16 +586,17 @@ report 50127 "Emudhra Sales Invoice Test"
     end;
 
     var
-
         shiptoemail: Text;
         shiptophone: Text;
         SrNo: Integer;
-        Where: Text;
-        which: Text;
+        InputString: Text[1024];
+        StringList: List of [Text];
+        OutputString: Text[1024];
+        i: Integer;
         newtext: Text;
         NewAmountInWords: Text;
         SalesInvoice1: Record "Sales Invoice Line";
-        SalesOrderComment: Record "Sales Comment Line";
+        SalesCommentLine: Record "Sales Comment Line";
         CompanyInfo: Record "Company Information";
         salesInvHead: Record "Sales Invoice Header";
         SalesInvLine: Record "Sales Invoice Line";

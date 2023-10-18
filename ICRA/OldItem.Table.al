@@ -1,7 +1,7 @@
 table 50009 "Old Item"
 {
     Caption = 'Old Item';
-    DataClassification = ToBeClassified;
+    DataClassification = CustomerContent;
 
     fields
     {

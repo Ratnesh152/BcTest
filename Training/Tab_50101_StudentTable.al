@@ -1,6 +1,7 @@
 table 50101 StudenRestAPI
 {
     Caption = ' Student Rest API Table';
+    DataClassification = CustomerContent;
     fields
     {
         field(1; ID; Integer)

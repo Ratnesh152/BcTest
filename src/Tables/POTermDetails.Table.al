@@ -1,5 +1,6 @@
 table 50052 "SSE PO Term Details"
 {
+    DataClassification = CustomerContent;
     fields
     {
         field(1; "Purchase Order No."; Code[20])

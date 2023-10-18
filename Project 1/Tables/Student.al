@@ -2,6 +2,7 @@ table 50004 Student
 {
     Caption = 'Student';
     DataCaptionFields = "No.", Name;
+    DataClassification = CustomerContent;
     fields
     {
         field(1; "No."; Code[20])

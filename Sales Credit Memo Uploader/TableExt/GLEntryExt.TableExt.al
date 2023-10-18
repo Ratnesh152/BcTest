@@ -4,6 +4,7 @@ tableextension 50122 "GL Entry ext" extends "Item Ledger Entry"
     {
         field(50100; Reference; Text[100])
         {
+            DataClassification = CustomerContent;
         }
     }
 }
