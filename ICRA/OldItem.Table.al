@@ -100,7 +100,7 @@ table 50009 "Old Item"
         UserSetup: Record "User Setup";
     begin
         if Usersetup.Get(UserId) then
-            if Usersetup."Allow Old Item Edit" = false then
+            // if Usersetup."Allow Old Item Edit" = false then
                 Error('%1 user is not allowed to Edit Items List', UserId);
     end;
 }

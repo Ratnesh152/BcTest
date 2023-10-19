@@ -7,7 +7,7 @@
             "type": "al",
             "environmentType": "Sandbox",
             "environmentName": "UAT",
-            "startupObjectId": 50,
+            "startupObjectId": 50017,
             "startupObjectType": "Page",
             "breakOnError": true,
             "launchBrowser": true,

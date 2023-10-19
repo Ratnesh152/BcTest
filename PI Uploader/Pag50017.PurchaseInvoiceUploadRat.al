@@ -1,12 +1,13 @@
-page 50061 "Purchase Invoice Upload"
+page 50017 "Purchase Invoice Upload Rat"
 {
     DeleteAllowed = false;
     InsertAllowed = false;
     ModifyAllowed = false;
     UsageCategory = Lists;
     ApplicationArea = All;
+    // RefreshOnActivate = true;
     PageType = List;
-    SourceTable = 50020;
+    SourceTable = "PI Uploader Rat";
     SourceTableView = SORTING("Document ID") ORDER(Ascending);
     layout
     {
@@ -15,9 +16,6 @@ page 50061 "Purchase Invoice Upload"
             repeater(Group)
             {
                 field("Document ID"; rec."Document ID")
-                {
-                }
-                field("Company Name"; rec."Company Name")
                 {
                 }
                 field("Vendor No."; rec."Vendor No.")
@@ -36,57 +34,6 @@ page 50061 "Purchase Invoice Upload"
                 {
                 }
                 field(Location; rec.Location)
-                {
-                }
-                field(Structure; rec.Structure)
-                {
-                }
-                field("Link Path"; rec."Link Path")
-                {
-                }
-                field(Type; rec.Type)
-                {
-                }
-                field("No."; rec."No.")
-                {
-                }
-                field(Description; rec.Description)
-                {
-                }
-                field("Unit Of Measure Code"; rec."Unit Of Measure Code")
-                {
-                }
-                field(Quantity; rec.Quantity)
-                {
-                }
-                field("Direct Unit Cost Exc Tax"; rec."Direct Unit Cost Exc Tax")
-                {
-                }
-                field("Description 2"; rec."Description 2")
-                {
-                }
-                field("GST Group Code"; rec."GST Group Code")
-                {
-                }
-                field("HSN Code"; rec."HSN Code")
-                {
-                }
-                field("TDS Nature Of Deduction"; rec."TDS Nature Of Deduction")
-                {
-                }
-                field("GST Group Type"; rec."GST Group Type")
-                {
-                }
-                field("GST Credit"; rec."GST Credit")
-                {
-                }
-                field("Project Code"; rec."Project Code")
-                {
-                }
-                field("Department Code"; rec."Department Code")
-                {
-                }
-                field("Employee Code"; rec."Employee Code")
                 {
                 }
                 field(Status; rec.Status)
@@ -117,7 +64,7 @@ page 50061 "Purchase Invoice Upload"
                     Promoted = true;
                     PromotedCategory = Process;
                     PromotedIsBig = true;
-                    RunObject = XMLport 50009;
+                    RunObject = XMLport "PI Uplod-Export Template Rat";
                 }
                 action(ImportInvoiceLines)
                 {
@@ -127,7 +74,13 @@ page 50061 "Purchase Invoice Upload"
                     Promoted = true;
                     PromotedCategory = Process;
                     PromotedIsBig = true;
-                    RunObject = XMLport 50008;
+                    RunObject = XMLport "PI Uploader Rat";
+                    trigger OnAction()
+                    begin
+                        // if Rec."Vendor Invoice No." = xRec."Vendor Invoice No." then
+                        //     Error(Rec."Vendor Invoice No.");
+                        // CurrPage.Update();
+                    end;
                 }
                 action(CreateInvoicesAllCompany)
                 {
@@ -139,7 +92,8 @@ page 50061 "Purchase Invoice Upload"
 
                     trigger OnAction()
                     var
-                        ProcessPICreatonRequest: Codeunit "Process PI CreatonRequest";
+                        PIUploader: Record "PI Uploader Rat";
+                        ProcessPICreatonRequest: Codeunit "Process PI CreatonRequest Rat";
                     begin
                         ProcessPICreatonRequest.CompanyWisePICreationRequest;
                     end;
@@ -151,7 +105,11 @@ page 50061 "Purchase Invoice Upload"
                     // Visible = false; 
                     Promoted = true;
                     PromotedCategory = Process;
-                    RunObject = CODEUNIT "Process PI CreatonRequest";
+
+                    trigger OnAction()
+                    begin
+                        CODEUNIT.RUN(CODEUNIT::"Process PI CreatonRequest Rat");
+                    end;
                 }
                 action(CreateLocation)
                 {
@@ -159,11 +117,14 @@ page 50061 "Purchase Invoice Upload"
                     Caption = 'Create Location';
                     Promoted = true;
                     PromotedCategory = Process;
-                    RunObject = Codeunit CreateLocation1;
-
+                    trigger OnAction()
+                    begin
+                        Codeunit.Run(Codeunit::CreateLocation1);
+                    end;
                 }
             }
         }
     }
+
 }
 
