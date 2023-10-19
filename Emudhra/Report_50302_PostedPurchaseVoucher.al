@@ -155,7 +155,6 @@ report 50302 "Posted Purchase Voucher"
                 column(PrintLineNarration; PrintLineNarration)
                 {
                 }
-
                 trigger OnAfterGetRecord()
                 begin
                     IF PrintLineNarration THEN BEGIN
